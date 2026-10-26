@@ -78,6 +78,18 @@ public:
         return "Redid: " + op->describe();
     }
 
+        string getText() {
+        return text;
+    }
+
+    bool canUndo() {
+        return !undoStack.isEmpty();
+    }
+
+    bool canRedo() {
+        return !redoStack.isEmpty();
+    }
+
     string display() {
         return "Current text: \"" + text + "\"";
     }
