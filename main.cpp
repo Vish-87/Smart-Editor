@@ -1,23 +1,27 @@
 #include <iostream>
-#include "TextEditor.h"
+#include "Commands.h"
 using namespace std;
 
 int main() {
-    TextEditor e;
-    cout << e.insert("Data") << endl;
-    cout << e.insert("Structures") << endl;
-    cout << e.display() << endl;
-    cout << e.undo() << endl;
-    cout << e.display() << endl;
-    cout << e.redo() << endl;
-    cout << e.display() << endl;
-    cout << e.replace("Data", "Algo") << endl;
-    cout << e.display() << endl;
-    cout << e.deleteText(0, 5) << endl;
-    cout << e.display() << endl;
-    cout << e.undo() << endl;
-    cout << e.undo() << endl;
-    cout << e.display() << endl;
-    cout << e.showHistory() << endl;
+    TextEditor editor;
+
+    cout << "=== Smart Undo/Redo Text Editor ===" << endl;
+    cout << "Type HELP for commands, EXIT to quit." << endl;
+
+    string line;
+    while (true) {
+        cout << "> ";
+        if (!getline(cin, line)) {
+            break;   // input ended (e.g. Ctrl+D), so stop
+        }
+        if (toUpper(trim(line)) == "EXIT") {
+            cout << "Goodbye!" << endl;
+            break;
+        }
+        string reply = handleCommand(editor, line);
+        if (reply != "") {
+            cout << reply << endl;
+        }
+    }
     return 0;
 }
