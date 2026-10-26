@@ -1,19 +1,23 @@
 #include <iostream>
-#include <string>
-#include "Stack.h"
-#include "Operation.h"
+#include "DoublyLinkedList.h"
 using namespace std;
 
 int main() {
-     string text = "Hello, World!";
-     Operation op("replace", 0,"Hello", "Hi");
-     text = op.apply(text);
-     cout << text << endl; // Output: "Hi, World!"
+    DoublyLinkedList h;
+    h.add(new Operation("INSERT", 0, "", "Data"));
+    h.add(new Operation("INSERT", 4, "", " Structures"));
+    h.add(new Operation("REPLACE", 0, "Data", "Algo"));
+    cout << h.toString() << endl;      // expect?
 
-    Operation ins("INSERT", 4, "", "!!");
-    text = ins.apply(text);
-    cout << text << endl;      // expect?
-    text = ins.reverse(text);
-    cout << text << endl; 
+    h.undo();
+    h.undo();
+    cout << h.toString() << endl;      // expect?
+
+    h.redo();
+    cout << h.toString() << endl;      // expect?
+
+    h.undo();
+    h.add(new Operation("DELETE", 0, "Data", ""));
+    cout << h.toString() << endl;      // expect?
     return 0;
 }

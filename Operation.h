@@ -19,14 +19,14 @@ class Operation{
 
     string describe(){
         if(type == "INSERT"){
-            return "INSERT \"" + added + "\" at position" + to_string(position);
+            return "INSERT \"" + added + "\" at position " + to_string(position);
 
         }
         else if(type == "DELETE"){
-            return "DELETE \"" + removed + "\" at position" + to_string(position);
+            return "DELETE \"" + removed + "\" at position " + to_string(position);
         }
         else if(type == "REPLACE"){
-            return "REPLACE \"" + removed + "\" with \"" + added + "\" at position" + to_string(position);
+            return "REPLACE \"" + removed + "\" with \"" + added + "\" at position " + to_string(position);
         }
         else{
             return "Unknown operation";
