@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Undo/Redo Text Editor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Smart Undo/Redo Text Editor</h1>
+    <p>Built with two stacks and a doubly linked list</p>
+  </header>
+
+  <main>
+    <section class="left">
+      <div class="card">
+        <div class="card-head">
+          <h2>Document</h2>
+          <div class="buttons">
+            <button id="undoBtn" class="btn undo">&#8630; Undo</button>
+            <button id="redoBtn" class="btn redo">Redo &#8631;</button>
+          </div>
+        </div>
+        <pre id="text" class="document"></pre>
+      </div>
+
+      <div class="card">
+        <h2>Command</h2>
+        <div class="command-row">
+          <input id="cmd" type="text" placeholder="Type a command, e.g. INSERT Hello" autocomplete="off" autofocus>
+          <button id="newlineBtn" class="btn newline" title="Go to the next line">&#8629; New line</button>
+          <button id="runBtn" class="btn run">Run</button>
+        </div>
+
+        <div class="chips">
+          <span>Quick fill:</span>
+          <button class="chip" data-cmd="INSERT ">INSERT</button>
+          <button class="chip" data-cmd="INSERT_AFTER  ">INSERT_AFTER</button>
+          <button class="chip" data-cmd="DELETE ">DELETE</button>
+          <button class="chip" data-cmd="DELETE_WORD" data-run="1">DELETE_WORD</button>
+          <button class="chip" data-cmd="BACKSPACE 1">BACKSPACE</button>
+          <button class="chip" data-cmd="REPLACE  WITH ">REPLACE</button>
+          <button class="chip" data-cmd="CLEAR" data-run="1">CLEAR</button>
+          <button class="chip" data-cmd="HISTORY" data-run="1">HISTORY</button>
+          <button class="chip" data-cmd="HELP" data-run="1">HELP</button>
+        </div>
+
+        <pre id="message" class="message"></pre>
+      </div>
+    </section>
+
+    <section class="right">
+      <div class="card">
+        <h2>Editing history</h2>
+        <p class="hint">A doubly linked list. The arrow marks the current step.</p>
+        <ul id="history" class="history"></ul>
+      </div>
+
+      <div class="card">
+        <h2>Stack status</h2>
+        <div class="status-row">
+          <span>Undo stack</span>
+          <span id="undoStatus" class="pill"></span>
+        </div>
+        <div class="status-row">
+          <span>Redo stack</span>
+          <span id="redoStatus" class="pill"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <mutex>
+#include <cstdlib>
 #include "httplib.h"
 #include "Commands.h"
 using namespace std;
@@ -37,8 +38,23 @@ string buildJson(const string &message) {
 int main() {
     httplib::Server svr;
 
+    // Online hosts tell us which port to use through the PORT variable.
+    // On your own computer there is no PORT, so we use 8080 and only allow
+    // connections from your own machine.
+    int port = 8080;
+    string host = "localhost";
+    const char* envPort = getenv("PORT");
+    if (envPort != nullptr) {
+        port = atoi(envPort);
+        host = "0.0.0.0";   // accept connections from the internet
+    }
+
     // Serve the website files from the "frontend" folder
-    svr.set_mount_point("/", "./frontend");
+    if (!svr.set_mount_point("/", "./frontend")) {
+        cout << "ERROR: could not find the 'frontend' folder here." << endl;
+        cout << "Run the server from the folder that contains 'frontend'." << endl;
+        return 1;
+    }
 
     // The page sends a command here
     svr.Post("/api/command", [](const httplib::Request &req, httplib::Response &res) {
@@ -53,11 +69,12 @@ int main() {
         res.set_content(buildJson(""), "application/json");
     });
 
-    cout << "Server running. Open http://localhost:8080 in your browser." << endl;
+    cout << "Server running on port " << port << "." << endl;
+    cout << "Local: open http://localhost:" << port << " in your browser." << endl;
     cout << "Press Ctrl+C to stop." << endl;
 
-    if (!svr.listen("localhost", 8080)) {
-        cout << "Could not start the server. Is port 8080 already in use?" << endl;
+    if (!svr.listen(host.c_str(), port)) {
+        cout << "Could not start the server. Is port " << port << " already in use?" << endl;
         return 1;
     }
     return 0;
