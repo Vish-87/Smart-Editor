@@ -50,9 +50,9 @@ int main() {
     }
 
     // Serve the website files from the "frontend" folder
-    if (!svr.set_mount_point("/", "./frontend")) {
-        cout << "ERROR: could not find the 'frontend' folder here." << endl;
-        cout << "Run the server from the folder that contains 'frontend'." << endl;
+        if (!svr.set_mount_point("/", "./Frontend")) {
+        cout << "ERROR: could not find the 'Frontend' folder here." << endl;
+        cout << "Run the server from the folder that contains 'Frontend'." << endl;
         return 1;
     }
 
